@@ -1,0 +1,15 @@
+
+
+#addBtn {
+    margin-left: 10px;
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+}
+
+#taskName {
+    display: block;
+    margin: auto;
+    justify-content: center;
+}
+

@@ -1,25 +1,64 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import TodoList from './Components/TodoList';
+import AddTodo from './Components/Addtodo';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [todos, setTodos] = useState([]);
+
+  const handleAdd = (text) => {
+    setTodos([...todos, { id: Date.now(), text, isCompleted: false }]);
+    
+  };
+
+  const handleDelete = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  const handleEdit = (id, newText) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, text: newText } : todo
+      )
+    );
+  };
+
+  const handleCheck = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
+      )
+    );
+  };
+
+  const handleDeleteAll = () => {
+    setTodos(todos.filter((todo) => !todo.isCompleted));
+  };
+
+  const handleDoneAll = () => {
+    setTodos(todos.map((todo) => ({ ...todo, isCompleted: true })));
+  };
+
+  const handleSelectAll = () => {
+    setTodos(todos.map((todo) => ({ ...todo, isCompleted: true })));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="card-container">
+      <h1>LexMeet To-Do List Application</h1>
+      <AddTodo onAdd={handleAdd} />
+      <TodoList
+        todos={todos}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+        onCheck={handleCheck}
+        onDeleteAll={handleDeleteAll}
+        onDoneAll={handleDoneAll}
+        onSelectAll={handleSelectAll}
+      />
+
     </div>
   );
-}
+};
 
 export default App;
